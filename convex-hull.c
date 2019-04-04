@@ -3,7 +3,7 @@
  *
  * created for COMP20007 Design of Algorithms 2019
  * template by Tobias Edwards <tobias.edwards@unimelb.edu.au>
- * implementation by <Insert Name Here>
+ * implementation by Matthew Lui 993333
  */
 
 //                   WRITE YOUR IMPLEMENTATION HERE
@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "convex-hull.h"
 
@@ -23,9 +24,25 @@
 // right it returns RIGHT ('r').
 // If p0, p1 and p2 are collinear then COLLINEAR ('c') is returned.
 char orientation(Point p0, Point p1, Point p2) {
-  // TODO: Implement orientation()
-  fprintf(stderr, "Error: orientation() not implemented\n");
-  exit(EXIT_FAILURE);
+    // First consider ax + by = c, the line between p0 and p1.
+    // E.g. for p0 = (0,0) and p1 = (5,5), a = 5, b = -5, c = 0.
+    double a, b, c;
+    a = p1.y - p0.y;
+    b = p0.x - p1.x;
+    c = p0.x*p1.y - p0.y*p1.x;
+
+    // Now any point left will have ax + by < c, right > c, collinear = c
+    // See p139 of Levitin
+    // Compute ax+by
+    double lhs = a*p2.x + b*p2.y;
+    // Compare to c
+    if (lhs < c) {
+        return 'l';
+    } else if (lhs == c) {
+        return 'c';
+    } else {
+        return 'r';
+    }
 }
 
 // Takes a polygon (i.e. an array of points) given in counter-clockwise order
