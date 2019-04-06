@@ -8,6 +8,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 #include "list.h"
 #include "point.h"
@@ -96,7 +97,10 @@ void list_add_start(List *list, Point newPoint) {
 	// if list was empty, this new node is also the last node now
 	if(list->size == 0) {
 		list->tail = node;
-	}
+    } else {
+        // Let the second node know who is behind
+        node->next->prev = node; 
+    }
 
 	// and we need to keep size updated!
 	list->size++;
@@ -141,12 +145,12 @@ Point list_remove_start(List *list) {
 	Node *start_node = list->head;
 	Point oldPoint = start_node->point;
 	
-	// then replace the head with its next node (may be null)
-	list->head = list->head->next;
-
-    // If it does exist, update the prev pointer
-    if (list->head->next != NULL) {
-        list->head->next->prev = NULL;
+    // then replace the head with its next node (may be null)
+	list->head = start_node->next;
+    
+    // If it exists, let the adjacent node know
+    if (start_node->next != NULL) {
+        start_node->next->prev = NULL;
     }
 
 	// if this was the last node in the list, the tail also needs to be cleared
@@ -178,12 +182,12 @@ Point list_remove_end(List *list) {
 	
 	// Replace tail, could be null 
     list->tail = end_node->prev;
-	
 	if(list->size == 1) {
 		// if we're removing the last node, the head also needs clearing
 		list->head = NULL;
 	} else {
-		// otherwise, the second-last node needs to drop the removed last node
+		// let the previous node know what's up
+        assert(end_node->prev);
 		end_node->prev->next = NULL;
 	}
 

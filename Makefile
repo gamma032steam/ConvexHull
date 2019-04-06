@@ -7,7 +7,7 @@
 CC     = gcc
 CFLAGS = -Wall
 EXE    = a1
-OBJ    = main.o point.o deque.o convex-hull.o
+OBJ    = main.o point.o deque.o convex-hull.o list.o
 
 # Default Target, so "$ make" or "$ make all" will do this
 all: $(EXE)
