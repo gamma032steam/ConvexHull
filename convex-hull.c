@@ -25,11 +25,14 @@
 // If p0, p1 and p2 are collinear then COLLINEAR ('c') is returned.
 char orientation(Point p0, Point p1, Point p2) {
     // First consider ax + by = c, the line between p0 and p1.
+    // a = p1y - y0y, b = p0x - p1x, c = p0x*p1y - p0y*p1x
     // E.g. for p0 = (0,0) and p1 = (5,5), a = 5, b = -5, c = 0.
     double a, b, c;
     a = p1.y - p0.y;
     b = p0.x - p1.x;
     c = p0.x*p1.y - p0.y*p1.x;
+
+    printf("a: %.2f, b: %.2f, c: %.2f", a, b, c);
 
     // Now any point left will have ax + by < c, right > c, collinear = c
     // See p139 of Levitin

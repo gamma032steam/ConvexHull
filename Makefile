@@ -25,6 +25,8 @@ convex-hull.o: convex-hull.h convex-hull.c
 	$(CC) $(CFLAGS) -c convex-hull.c
 
 # TODO: Add any other dependencies you may create
+list.o: list.h list.c
+	$(CC) $(CFLAGS) -c list.c
 
 # "clean" and "all" don't actually create files called "clean" and "all"
 # and are thus "Phony Targets"
