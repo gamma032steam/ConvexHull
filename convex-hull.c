@@ -32,8 +32,6 @@ char orientation(Point p0, Point p1, Point p2) {
     b = p0.x - p1.x;
     c = p0.x*p1.y - p0.y*p1.x;
 
-    printf("a: %.2f, b: %.2f, c: %.2f", a, b, c);
-
     // Now any point left will have ax + by < c, right > c, collinear = c
     // See p139 of Levitin
     // Compute ax+by

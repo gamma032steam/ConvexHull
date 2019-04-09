@@ -1,0 +1,58 @@
+#!/bin/bash
+make
+echo "Test Script"
+echo "****ORIENTATION****"
+echo "Test 1 Diff:"
+./a1 -o < ./sample_input/orientation-1-in.txt > tempin.txt
+diff tempin.txt ./sample_input/orientation-1-out.txt
+echo "Test 2 Diff:"
+./a1 -o < ./sample_input/orientation-2-in.txt > tempin.txt
+diff tempin.txt ./sample_input/orientation-2-out.txt
+echo "Test 3 Diff:"
+./a1 -o < ./sample_input/orientation-3-in.txt > tempin.txt
+diff tempin.txt ./sample_input/orientation-3-out.txt
+echo "Test 4 Diff:"
+./a1 -o < ./sample_input/orientation-4-in.txt > tempin.txt
+diff tempin.txt ./sample_input/orientation-4-out.txt
+echo "Test 5 Diff:"
+./a1 -o < ./sample_input/orientation-5-in.txt > tempin.txt
+diff tempin.txt ./sample_input/orientation-5-out.txt
+ 
+echo "****TESTING DEQUE****"
+echo "Test 1 Diff:"
+./a1 -d < ./sample_input/deque-1-in.txt > tempin.txt
+diff tempin.txt ./sample_input/deque-1-out.txt
+echo "Test 2 Diff:"
+./a1 -d < ./sample_input/deque-2-in.txt > tempin.txt
+diff tempin.txt ./sample_input/deque-2-out.txt
+echo "Test 3 Diff:"
+./a1 -d < ./sample_input/deque-3-in.txt > tempin.txt
+diff tempin.txt ./sample_input/deque-3-out.txt
+echo "Test 4 Diff:"
+./a1 -d < ./sample_input/deque-4-in.txt > tempin.txt
+diff tempin.txt ./sample_input/deque-4-out.txt
+echo "Test 5 Diff:"
+./a1 -d < ./sample_input/deque-5-in.txt > tempin.txt
+diff tempin.txt ./sample_input/deque-5-out.txt
+ 
+ 
+ 
+echo "****TESTING INHULL****"
+echo "Test 1 Diff:"
+./a1 -i < ./sample_input/inside-hull-1-in.txt > tempin.txt
+diff tempin.txt ./sample_input/inside-hull-1-out.txt
+echo "Test 2 Diff:"
+./a1 -i < ./sample_input/inside-hull-2-in.txt > tempin.txt
+diff tempin.txt ./sample_input/inside-hull-2-out.txt
+echo "Test 3 Diff:"
+./a1 -i < ./sample_input/inside-hull-3-in.txt > tempin.txt
+diff tempin.txt ./sample_input/inside-hull-3-out.txt
+echo "Test 4 Diff:"
+./a1 -i < ./sample_input/inside-hull-4-in.txt > tempin.txt
+diff tempin.txt ./sample_input/inside-hull-4-out.txt
+echo "Test 5 Diff:"
+./a1 -i < ./sample_input/inside-hull-5-in.txt > tempin.txt
+diff tempin.txt ./sample_input/inside-hull-5-out.txt
+rm tempin.txt
+ 
+echo "If all diffs are empty, it means the actual output is the same as the expected output"
