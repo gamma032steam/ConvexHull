@@ -212,3 +212,32 @@ bool list_is_empty(List *list) {
 	assert(list != NULL);
 	return (list->size==0);
 }
+
+// ADDED:
+
+// Returns the node at a given index
+Point index_list(List* list, int index) {
+    assert(list);
+    assert(index > 0);
+    assert(index < list_size(list));
+    
+    int i = 0;
+    Node* curr = list->head;
+    while(i < index) {
+        curr = curr->next;
+        i++;
+    }
+    return curr->point;
+} 
+
+// Prints all the nodes in the list
+void print_list(List* list) {
+    Node* curr;
+    curr = list->head;
+
+    while(curr) {
+        print_point(curr->point);
+        curr = curr->next;
+    }
+}
+

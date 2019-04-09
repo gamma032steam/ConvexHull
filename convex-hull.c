@@ -18,6 +18,7 @@
 #include <assert.h>
 
 #include "convex-hull.h"
+#include "deque.h"
 
 // Returns the orientation of Point p2 in relation to the line segment p0p1.
 // If p2 is to the left of p0p1 then it returns LEFT ('l'), if p2 is to the
@@ -57,8 +58,76 @@ char orientation(Point p0, Point p1, Point p2) {
 // should terminate and COLLINEAR_POINTS should be returned.
 //
 // If an error occurs this function should return INSIDE_HULL_ERROR.
+
+// Helpers
+
+/* Initializers the deque as required by the orientation */
+int init_hull(Point* polygon, Deque* myDeque) {
+    char firstThree = orientation(polygon[0], polygon[1], polygon[2]);
+    if(firstThree == 'l') {
+        deque_push(myDeque, polygon[2]);
+        deque_push(myDeque, polygon[0]);
+        deque_push(myDeque, polygon[1]);
+        deque_push(myDeque, polygon[2]);
+    } else if (firstThree == 'r') {
+        deque_push(myDeque, polygon[2]);
+        deque_push(myDeque, polygon[1]);
+        deque_push(myDeque, polygon[0]);
+        deque_push(myDeque, polygon[2]);
+    } else {
+        return COLLINEAR_POINTS;
+    }
+    return 0;
+}
+
+/* Shortcuts to get the result of the bottom/top orientation */
+char orientation_bottom(Deque* myDeque, Point* polygon, int i) {
+    return orientation(index_deque(myDeque, 0), 
+                       index_deque(myDeque, 1), polygon[i]);
+}
+
+char orientation_top(Deque* myDeque, Point* polygon, int n, int i) {
+    return orientation(index_deque(myDeque, n-2), index_deque(myDeque, n-1), 
+            polygon[i]);
+}
+
 int inside_hull(Point *polygon, int n, Point *hull) {
-  // TODO: Implement the InsideHull algorithm
-  fprintf(stderr, "Error: inside_hull() not implemented\n");
-  exit(EXIT_FAILURE);
+    // Input validation
+    // Assert polygon
+    assert(polygon);
+
+    // Assume points >= 3
+    if(n < 3) {
+        return INSIDE_HULL_ERROR;
+    }
+
+    // Initialization
+    // Create deque
+    Deque *myDeque = new_deque(); 
+    
+    // Set up first three points
+    if (init_hull(polygon, myDeque) == COLLINEAR_POINTS) {
+        // Function couldn't because collinear
+        return COLLINEAR_POINTS;
+    }
+
+    print_deque(myDeque);
+
+    // Pseduocode algorithm
+    int i = 3;
+    while (i < n) {
+        if ((orientation_top(myDeque, polygon, n, i) == 'l') && 
+                (orientation_bottom(myDeque, polygon, i) == 'l' )) {
+            i++;
+            continue;
+        }
+
+        while(orientation_top(myDeque, polygon, n, i) == 'r') {
+            deque_pop(myDeque);
+        }
+    }
+    // Collinear check
+    
+    // Get and return deque size (ignore last)
+    return 0;
 }

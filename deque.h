@@ -71,5 +71,7 @@ Point deque_remove(Deque *deque);
 int deque_size(Deque *deque);
 
 // TODO: Add any other functions you might need for your Deque module
+void print_deque(Deque* myDeque);
+Point index_deque(Deque* deDeque, int index);
 
 #endif

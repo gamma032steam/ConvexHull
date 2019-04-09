@@ -89,3 +89,11 @@ Point deque_remove(Deque *deque) {
 int deque_size(Deque *deque) {
     return list_size(deque->myList);
 }
+
+void print_deque(Deque* myDeque) {
+    print_list(myDeque->myList);
+}
+
+Point index_deque(Deque* myDeque, int index) {
+    return index_list(myDeque->myList, index);
+}
