@@ -93,6 +93,17 @@ char orientation_top(Deque* myDeque, Point* polygon, Point curr) {
                        index_deque_end(myDeque, 0), curr);
 }
 
+// Returns 1 when a polygon has collinear points, O(n)
+int collinear_polygon(Point* polygon, int n) {
+    // At least 3 points
+    for (int i = 0; i <= n-1; i++) {
+        if (orientation(polygon[i], polygon[(i+1)%n], polygon[(i+2)%n]) == 'c') {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 // Main function (Part F)
 
 int inside_hull(Point *polygon, int n, Point *hull) {
@@ -107,6 +118,12 @@ int inside_hull(Point *polygon, int n, Point *hull) {
         return INSIDE_HULL_ERROR;
     }
 
+    // Input polygon should not have collinear points
+    if (collinear_polygon(polygon, n)) {
+        // Nothing to free at this point
+        return COLLINEAR_POINTS;
+    }
+
     // Initialization
     // Create deque
     Deque *myDeque = new_deque(); 
@@ -114,6 +131,7 @@ int inside_hull(Point *polygon, int n, Point *hull) {
     // Set up first three points
     if (init_hull(polygon, myDeque) == COLLINEAR_POINTS) {
         // Function couldn't contine because of collinear points
+        free_deque(myDeque);
         return COLLINEAR_POINTS;
     }
 
@@ -133,11 +151,23 @@ int inside_hull(Point *polygon, int n, Point *hull) {
         while (orientation_top(myDeque, polygon, curr_point) == 'r') {
             deque_pop(myDeque);
         }
+        // Collinear check; does the point we're about to add form a collinear
+        // line with previous two on top?
+        if (orientation_top(myDeque, polygon, curr_point) == 'c') {
+            free_deque(myDeque);
+            return COLLINEAR_POINTS;
+        }
+
         deque_push(myDeque, curr_point);
 
         // Bottom
         while (orientation_bottom(myDeque, polygon, curr_point) == 'r') {
             deque_remove(myDeque);
+        }
+        // Second collinear check
+        if (orientation_bottom(myDeque, polygon, curr_point) == 'c') {
+            free_deque(myDeque);
+            return COLLINEAR_POINTS;
         }
         deque_insert(myDeque, curr_point);
         
