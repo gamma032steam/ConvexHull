@@ -56,4 +56,10 @@ void print_list(List* list);
 // returns the indexth element in list
 Point index_list(List* list, int index); 
 
+// indexing from the rear
+Point index_list_end(List* list, int index); 
+
+// Copies out the list elements to an array
+void extract_list(List* list, Point* array);
+
 #endif

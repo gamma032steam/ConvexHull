@@ -218,7 +218,9 @@ bool list_is_empty(List *list) {
 // Returns the node at a given index
 Point index_list(List* list, int index) {
     assert(list);
-    assert(index > 0);
+    // Note that index is 0, 1, ... n-1 but list size is 1, 2, ..., n
+    assert(index >= 0);
+    //printf("List size: %d, index: %d\n", list_size(list), index);
     assert(index < list_size(list));
     
     int i = 0;
@@ -230,6 +232,23 @@ Point index_list(List* list, int index) {
     return curr->point;
 } 
 
+// Same as above but from the end
+Point index_list_end(List* list, int index) {
+    assert(list);
+    assert(index >= 0);
+    int size = list_size(list);
+    assert(index < size);
+    
+    // Start from the top
+    int i = size;
+    Node* curr = list->tail;
+    while(i > size-index) {
+        curr = curr->prev;
+        i--;
+    }
+    return curr->point;
+}
+
 // Prints all the nodes in the list
 void print_list(List* list) {
     Node* curr;
@@ -237,6 +256,22 @@ void print_list(List* list) {
 
     while(curr) {
         print_point(curr->point);
+        curr = curr->next;
+    }
+}
+
+// Copies all elements in the list to an array of equal or smaller size
+void extract_list(List* list, Point* array) {
+    assert(list);
+    assert(array);
+
+    Node* curr;
+    curr = list->head;
+
+    int i = 0;
+    while(curr) {
+        array[i] = curr->point;
+        i++;
         curr = curr->next;
     }
 }

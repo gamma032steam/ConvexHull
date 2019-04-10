@@ -72,6 +72,10 @@ int deque_size(Deque *deque);
 
 // TODO: Add any other functions you might need for your Deque module
 void print_deque(Deque* myDeque);
-Point index_deque(Deque* deDeque, int index);
 
+Point index_deque(Deque* myDeque, int index);
+
+Point index_deque_end(Deque* myDeque, int index);
+
+void extract_deque(Deque* myDeque, Point* list);
 #endif

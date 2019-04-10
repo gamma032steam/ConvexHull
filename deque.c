@@ -97,3 +97,11 @@ void print_deque(Deque* myDeque) {
 Point index_deque(Deque* myDeque, int index) {
     return index_list(myDeque->myList, index);
 }
+
+Point index_deque_end(Deque* myDeque, int index) {
+    return index_list_end(myDeque->myList, index);
+}
+
+void extract_deque(Deque* myDeque, Point* list) {
+    extract_list(myDeque->myList, list);
+}

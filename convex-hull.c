@@ -81,20 +81,23 @@ int init_hull(Point* polygon, Deque* myDeque) {
 }
 
 /* Shortcuts to get the result of the bottom/top orientation */
-char orientation_bottom(Deque* myDeque, Point* polygon, int i) {
+char orientation_bottom(Deque* myDeque, Point* polygon, Point curr) {
     return orientation(index_deque(myDeque, 0), 
-                       index_deque(myDeque, 1), polygon[i]);
+                       index_deque(myDeque, 1), curr);
 }
 
-char orientation_top(Deque* myDeque, Point* polygon, int n, int i) {
-    return orientation(index_deque(myDeque, n-2), index_deque(myDeque, n-1), 
-            polygon[i]);
+char orientation_top(Deque* myDeque, Point* polygon, Point curr) {
+    return orientation(index_deque_end(myDeque, 1),
+                       index_deque_end(myDeque, 0), curr);
 }
+
+// Main function (Part F)
 
 int inside_hull(Point *polygon, int n, Point *hull) {
     // Input validation
     // Assert polygon
     assert(polygon);
+    // Must be a simple polygon
 
     // Assume points >= 3
     if(n < 3) {
@@ -107,27 +110,42 @@ int inside_hull(Point *polygon, int n, Point *hull) {
     
     // Set up first three points
     if (init_hull(polygon, myDeque) == COLLINEAR_POINTS) {
-        // Function couldn't because collinear
+        // Function couldn't contine because of collinear points
         return COLLINEAR_POINTS;
     }
 
-    print_deque(myDeque);
-
     // Pseduocode algorithm
     int i = 3;
+    Point curr_point;
     while (i < n) {
-        if ((orientation_top(myDeque, polygon, n, i) == 'l') && 
-                (orientation_bottom(myDeque, polygon, i) == 'l' )) {
+        //printf("i = %d\n", i);
+        curr_point = polygon[i];
+        if ((orientation_top(myDeque, polygon, curr_point) == 'l') && 
+                (orientation_bottom(myDeque, polygon, curr_point) == 'l' )) {
             i++;
             continue;
         }
-
-        while(orientation_top(myDeque, polygon, n, i) == 'r') {
+        
+        // Top
+        while (orientation_top(myDeque, polygon, curr_point) == 'r') {
             deque_pop(myDeque);
         }
+        deque_push(myDeque, curr_point);
+
+        // Bottom
+        while (orientation_bottom(myDeque, polygon, curr_point) == 'r') {
+            deque_remove(myDeque);
+        }
+        deque_insert(myDeque, curr_point);
+        i++;
     }
-    // Collinear check
     
     // Get and return deque size (ignore last)
-    return 0;
+    int size = deque_size(myDeque) - 1;
+
+    // Copy out the deque. This has the last point but is not included by size.
+    extract_deque(myDeque, hull);
+    free_deque(myDeque);
+
+    return size;
 }
