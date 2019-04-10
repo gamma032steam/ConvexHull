@@ -80,7 +80,9 @@ int init_hull(Point* polygon, Deque* myDeque) {
     return 0;
 }
 
-/* Shortcuts to get the result of the bottom/top orientation */
+/* Shortcuts to get the result of the bottom/top orientation 
+ * Index functions are O(n) in the worst-case but calls where index = 1 or 0
+ * can be considered O(1) */
 char orientation_bottom(Deque* myDeque, Point* polygon, Point curr) {
     return orientation(index_deque(myDeque, 0), 
                        index_deque(myDeque, 1), curr);
@@ -95,9 +97,10 @@ char orientation_top(Deque* myDeque, Point* polygon, Point curr) {
 
 int inside_hull(Point *polygon, int n, Point *hull) {
     // Input validation
+    // We are making the assumption that the input is a simple polygon
+
     // Assert polygon
     assert(polygon);
-    // Must be a simple polygon
 
     // Assume points >= 3
     if(n < 3) {
@@ -114,14 +117,14 @@ int inside_hull(Point *polygon, int n, Point *hull) {
         return COLLINEAR_POINTS;
     }
 
-    // Pseduocode algorithm
+    // Pseduocode algorithm (Melkmann)
     int i = 3;
     Point curr_point;
+    
     while (i < n) {
-        //printf("i = %d\n", i);
         curr_point = polygon[i];
         if ((orientation_top(myDeque, polygon, curr_point) == 'l') && 
-                (orientation_bottom(myDeque, polygon, curr_point) == 'l' )) {
+            (orientation_bottom(myDeque, polygon, curr_point) == 'l' )) {
             i++;
             continue;
         }
@@ -137,6 +140,7 @@ int inside_hull(Point *polygon, int n, Point *hull) {
             deque_remove(myDeque);
         }
         deque_insert(myDeque, curr_point);
+        
         i++;
     }
     

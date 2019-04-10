@@ -33,7 +33,7 @@ void free_deque(Deque *deque);
 // Add a Point to the top of a Deque
 //
 // TODO: Fill in the runtime of this function
-// Runtime: ...
+// Runtime: O(1)
 //
 // DO NOT CHANGE THIS FUNCTION SIGNATURE
 void deque_push(Deque *deque, Point data);
@@ -41,7 +41,7 @@ void deque_push(Deque *deque, Point data);
 // Add a Point to the bottom of a Deque
 //
 // TODO: Fill in the runtime of this function
-// Runtime: ...
+// Runtime: O(1)
 //
 // DO NOT CHANGE THIS FUNCTION SIGNATURE
 void deque_insert(Deque *deque, Point data);
@@ -49,7 +49,7 @@ void deque_insert(Deque *deque, Point data);
 // Remove and return the top Point from a Deque
 //
 // TODO: Fill in the runtime of this function
-// Runtime: ...
+// Runtime: O(1)
 //
 // DO NOT CHANGE THIS FUNCTION SIGNATURE
 Point deque_pop(Deque *deque);
@@ -57,7 +57,7 @@ Point deque_pop(Deque *deque);
 // Remove and return the bottom Point from a Deque
 //
 // TODO: Fill in the runtime of this function
-// Runtime: ...
+// Runtime: O(1)
 //
 // DO NOT CHANGE THIS FUNCTION SIGNATURE
 Point deque_remove(Deque *deque);
@@ -65,17 +65,21 @@ Point deque_remove(Deque *deque);
 // Return the number of Points in a Deque
 //
 // TODO: Fill in the runtime of this function
-// Runtime: ...
+// Runtime: O(1)
 //
 // DO NOT CHANGE THIS FUNCTION SIGNATURE
 int deque_size(Deque *deque);
 
 // TODO: Add any other functions you might need for your Deque module
+// Prints out the entire deque for testing purposes. O(n)
 void print_deque(Deque* myDeque);
 
+// Finds the indexth element in the deque from the start/end.
+// O(n) worst-case, but calls where index = 0 or 1 can be considered O(1)
 Point index_deque(Deque* myDeque, int index);
-
 Point index_deque_end(Deque* myDeque, int index);
 
+// Copies all deque elements into the list
+// O(n)
 void extract_deque(Deque* myDeque, Point* list);
 #endif

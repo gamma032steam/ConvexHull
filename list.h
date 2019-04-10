@@ -49,7 +49,7 @@ int list_size(List *list);
 // returns whether the list contains no elements (true) or some elements (false)
 bool list_is_empty(List *list);
 
-// custom
+// Custom functions
 // prints all the elements in the list
 void print_list(List* list);
 
