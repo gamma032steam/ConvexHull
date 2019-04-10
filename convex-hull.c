@@ -96,8 +96,10 @@ char orientation_top(Deque* myDeque, Point* polygon, Point curr) {
 // Returns 1 when a polygon has collinear points, O(n)
 int collinear_polygon(Point* polygon, int n) {
     // At least 3 points
-    for (int i = 0; i <= n-1; i++) {
-        if (orientation(polygon[i], polygon[(i+1)%n], polygon[(i+2)%n]) == 'c') {
+    int i = 0;
+    for (; i <= n-1; i++) {
+        if (orientation(polygon[i], polygon[(i+1)%n], 
+            polygon[(i+2)%n]) == 'c') {
             return 1;
         }
     }
